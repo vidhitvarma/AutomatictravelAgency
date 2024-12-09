@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.travel.agency.base.error.GenericErrorResponse;
+import com.travel.agency.base.exceptions.CustomerAlreadyExistsException;
 import com.travel.agency.base.exceptions.DriverAlreadyExistsException;
 import com.travel.agency.base.exceptions.DriverNotFoundException;
 import com.travel.agency.base.exceptions.NoBookingsFoundException;
@@ -32,9 +33,9 @@ public class CentralizedExeptionHandler {
 	}
 	
 	@ExceptionHandler(value = DriverAlreadyExistsException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.CONFLICT)
 	public @ResponseBody GenericErrorResponse driverAlreadyExistsExceptionHandler(DriverAlreadyExistsException e) {
-		return new GenericErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getLocalizedMessage(), System.currentTimeMillis());
+		return new GenericErrorResponse(HttpStatus.CONFLICT.value(), e.getLocalizedMessage(), System.currentTimeMillis());
 	}
 	
 	@ExceptionHandler(value = NoRouteFoundException.class)
@@ -44,9 +45,9 @@ public class CentralizedExeptionHandler {
 	}
 	
 	@ExceptionHandler(value = RouteAlreadyPresentException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.CONFLICT)
 	public @ResponseBody GenericErrorResponse routeAlreadyExistsExceptionHandler(RouteAlreadyPresentException e) {
-		return new GenericErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getLocalizedMessage(), System.currentTimeMillis());
+		return new GenericErrorResponse(HttpStatus.CONFLICT.value(), e.getLocalizedMessage(), System.currentTimeMillis());
 	}
 	
 	@ExceptionHandler(value = NoVehiclesFoundException.class)
@@ -59,6 +60,12 @@ public class CentralizedExeptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public @ResponseBody GenericErrorResponse noBookingsFoundExceptionHandler(NoBookingsFoundException e) {
 		return new GenericErrorResponse (HttpStatus.NOT_FOUND.value(), e.getLocalizedMessage(), System.currentTimeMillis());
+	}
+	
+	@ExceptionHandler(value = CustomerAlreadyExistsException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public @ResponseBody GenericErrorResponse customerAlreadyExistsExceptionHandler(CustomerAlreadyExistsException e) {
+		return new GenericErrorResponse(HttpStatus.CONFLICT.value(), e.getLocalizedMessage(), System.currentTimeMillis());
 	}
 
 }

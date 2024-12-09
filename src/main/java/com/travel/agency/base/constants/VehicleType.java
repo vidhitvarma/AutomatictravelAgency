@@ -1,6 +1,6 @@
 package com.travel.agency.base.constants;
 
-import com.travel.agency.base.exception.InvalidVehicleTypeException;
+import com.travel.agency.base.exceptions.InvalidVehicleTypeException;
 
 public enum VehicleType {
 

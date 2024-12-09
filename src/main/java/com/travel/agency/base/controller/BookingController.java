@@ -9,17 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.travel.agency.base.dao.BookingRequest;
 import com.travel.agency.base.dto.BookingResponse;
-import com.travel.agency.base.entity.Booking;
 import com.travel.agency.base.service.intf.IBookingService;
 
 @RestController
-@RequestMapping("/api")
 public class BookingController {
 	
 	private IBookingService bookingService;
@@ -29,6 +25,7 @@ public class BookingController {
 		this.bookingService = bookingService;
 	}
 
+	
 	@GetMapping("/booking")
 	public List<BookingResponse> getAllBookings() {
 		List<BookingResponse> listOfResponse = bookingService.getAllBookings();

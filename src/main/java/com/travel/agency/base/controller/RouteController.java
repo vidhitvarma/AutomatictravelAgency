@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.travel.agency.base.dao.RouteRequest;
@@ -17,11 +16,10 @@ import com.travel.agency.base.dto.RouteResponse;
 import com.travel.agency.base.service.intf.IRouteService;
 
 @RestController
-@RequestMapping("/api")
 public class RouteController {
-	
+
 	private IRouteService routeService;
-	
+
 	@Autowired
 	public RouteController(IRouteService routeService) {
 		this.routeService = routeService;
@@ -33,10 +31,10 @@ public class RouteController {
 		RouteResponse routeResponse = routeService.findRouteById(routeId);
 		return routeResponse;
 	}
-	
+
 //	Get List of Routes
 	@GetMapping("/route")
-	public List<RouteResponse> getAllRoutes(){
+	public List<RouteResponse> getAllRoutes() {
 		List<RouteResponse> response = routeService.getAllRoutes();
 		return response;
 	}
@@ -47,14 +45,14 @@ public class RouteController {
 		RouteResponse routeResponse = routeService.addRoute(routeRequest);
 		return routeResponse;
 	}
-	
+
 //	Update route
 	@PutMapping("/route/{routeId}")
 	public RouteResponse updateRouteById(@PathVariable("routeId") String routeId, @RequestBody RouteRequest request) {
 		RouteResponse response = routeService.updateRouteById(routeId, request);
 		return response;
 	}
-	
+
 //	Delete route
 	@DeleteMapping("/route/{routeId}")
 	public void deleteRouteById(@PathVariable("routeId") String routeId) {

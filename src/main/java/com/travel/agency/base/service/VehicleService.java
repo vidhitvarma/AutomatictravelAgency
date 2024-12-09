@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.travel.agency.base.constants.VehicleType;
 import com.travel.agency.base.dao.VehicleRequest;
 import com.travel.agency.base.dto.VehicleResponse;
 import com.travel.agency.base.entity.Driver;
@@ -57,7 +56,10 @@ public class VehicleService implements IVehicleService{
 	@Override
 	public VehicleResponse addNewVehicle(VehicleRequest newVehicle) {
 		Optional<Driver> driver = driverRepository.findById(newVehicle.getDriverId());
-		if(driver.isEmpty()) throw new DriverNotFoundException("Driver not found for id: " +newVehicle.getDriverId());
+		
+		if(driver.isEmpty()) {
+			throw new DriverNotFoundException("Driver not found for id: " +newVehicle.getDriverId());
+		}
 		Vehicle vehicleToAdd = agencyUtility.mapFromVehicleRequest(newVehicle, driver.get());
 		vehicleRepository.save(vehicleToAdd);
 		VehicleResponse response = agencyUtility.mapToVehicleResponse(vehicleToAdd);
@@ -70,8 +72,12 @@ public class VehicleService implements IVehicleService{
 	public VehicleResponse updateVehicleDetails(String vehicleId, VehicleRequest vehicleRequest) {
 		Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
 		Optional<Driver> driver = driverRepository.findById(vehicleRequest.getDriverId());
-		if(driver.isEmpty()) throw new DriverNotFoundException("Driver not found for id: " +vehicleRequest.getDriverId());
-		if(vehicle.isEmpty()) throw new NoVehiclesFoundException("Vehicle not found with number: " +vehicleId);
+		if(driver.isEmpty()) {
+			throw new DriverNotFoundException("Driver not found for id: " +vehicleRequest.getDriverId());
+		}
+		if(vehicle.isEmpty()) {
+			throw new NoVehiclesFoundException("Vehicle not found with number: " +vehicleId);
+		}
 		Vehicle updatedVehicle = agencyUtility.mapFromVehicleRequest(vehicleRequest, vehicle.get(), driver.get());
 		vehicleRepository.save(updatedVehicle);
 		VehicleResponse response = agencyUtility.mapToVehicleResponse(updatedVehicle);

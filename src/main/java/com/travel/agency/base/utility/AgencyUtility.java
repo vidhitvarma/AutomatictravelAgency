@@ -1,20 +1,21 @@
 package com.travel.agency.base.utility;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 
+import com.travel.agency.base.constants.Gender;
 import com.travel.agency.base.constants.VehicleType;
 import com.travel.agency.base.dao.BookingRequest;
+import com.travel.agency.base.dao.CustomerRequest;
 import com.travel.agency.base.dao.DriverRequest;
 import com.travel.agency.base.dao.RouteRequest;
 import com.travel.agency.base.dao.VehicleRequest;
 import com.travel.agency.base.dto.BookingResponse;
+import com.travel.agency.base.dto.CustomerResponse;
 import com.travel.agency.base.dto.DriverResponse;
 import com.travel.agency.base.dto.RouteResponse;
 import com.travel.agency.base.dto.VehicleResponse;
 import com.travel.agency.base.entity.Booking;
+import com.travel.agency.base.entity.Customer;
 import com.travel.agency.base.entity.Driver;
 import com.travel.agency.base.entity.Route;
 import com.travel.agency.base.entity.Vehicle;
@@ -148,5 +149,29 @@ public class AgencyUtility {
 		updatedBooking.setNumberOfPassengers(request.getNumberOfPassengers());
 		return updatedBooking;
 	}
+
+	public Customer mapFromCustomerRequest(CustomerRequest customerRequest) {
+		Customer customer  = new Customer();
+		try {
+			customer.setAddress(customerRequest.getAddress());
+			customer.setDateOfBirth(customerRequest.getDateOfBirth());
+			customer.setEmail(customerRequest.getEmail());
+			customer.setGender(Gender.toEnum(customerRequest.getGender()));
+			customer.setMobileNumber(customerRequest.getMobileNumber());
+			customer.setName(customerRequest.getName());
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+		return customer;
+	}
+
+	public CustomerResponse mapToCustomerResponse(Customer customerToAdd) {
+		CustomerResponse response = new CustomerResponse();
+		response.setEmail(customerToAdd.getEmail());
+		response.setName(customerToAdd.getName());
+		return response;
+	}
+
+
 
 }
